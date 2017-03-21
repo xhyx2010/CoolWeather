@@ -6,13 +6,11 @@ package com.coolweather.android.gson;
  */
 
 public class AQI {
+    public CityAqi city;
     public class CityAqi {
-        //@SerializedName("aqi")
         public String aqi;
-        //@SerializedName("pm25")
         public String pm25;
-        //@SerializedName("qlty")
         public String qlty;
     }
-    public CityAqi cityAqi;
+
 }

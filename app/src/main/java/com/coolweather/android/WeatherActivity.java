@@ -67,6 +67,7 @@ public class WeatherActivity extends AppCompatActivity {
         forecast_layout = (LinearLayout) findViewById(R.id.forecast_layout);
         aqi_txt = (TextView) findViewById(R.id.aqi_txt);
         pm25_txt = (TextView) findViewById(R.id.pm25_txt);
+        qlty_txt=(TextView) findViewById(R.id.qlty_txt);
         comfort_txt = (TextView) findViewById(R.id.comfort_txt);
         carWash_txt = (TextView) findViewById(R.id.carWash_txt);
         drsg_txt = (TextView) findViewById(R.id.drsg_txt);
@@ -89,7 +90,7 @@ public class WeatherActivity extends AppCompatActivity {
         //获取缓存
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = preferences.getString("weather", null);
-
+        final String weatherId;
         //检查缓存中是不是有bing每日一图
         String bingPic=preferences.getString("bing_pic",null);
         if(bingPic!=null){
@@ -101,7 +102,7 @@ public class WeatherActivity extends AppCompatActivity {
         }
 
         //检查是否有缓存天气信息
-        final String weatherId;
+
         if (weatherString != null) {
             //有缓存天气信息直接解析天气
             Weather weather = Utility.handleWeatherResponse(weatherString);
@@ -213,13 +214,18 @@ public class WeatherActivity extends AppCompatActivity {
             forecast_layout.addView(view);
         }
         if (weather.aqi!=null){
-            String aqiText=weather.aqi.cityAqi.aqi;
-            String pm25Text=weather.aqi.cityAqi.pm25;
-            String qltyText=weather.aqi.cityAqi.qlty;
+            String aqiText=weather.aqi.city.aqi;
+            String pm25Text=weather.aqi.city.pm25;
+            String qltyText=weather.aqi.city.qlty;
             aqi_txt.setText(aqiText);
             pm25_txt.setText(pm25Text);
             qlty_txt.setText(qltyText);
+        }else {
+            aqi_txt.setText("0");
+            pm25_txt.setText("0");
+            qlty_txt.setText("未知");
         }
+
 
         String comfor="舒适度："+weather.suggestion.comfort.info;
         String carWash="洗车指数："+weather.suggestion.carWash.info;
